@@ -1,0 +1,6 @@
+// config.json
+{
+  "AllowSkillRegression": false,
+  "StripInvalidProfessions": false,
+  "OpenMenuKey": "OemPlus"
+}

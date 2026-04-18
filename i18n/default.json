@@ -1,0 +1,48 @@
+// i18n/default.json
+{
+    // -----------------------------------------------------------------------
+    // In-game menu
+    // -----------------------------------------------------------------------
+    "menu.title": "Skill Adjuster",
+
+    // -----------------------------------------------------------------------
+    // GMCM section header
+    // -----------------------------------------------------------------------
+    "section.options": "Options",
+
+    // -----------------------------------------------------------------------
+    // GMCM option toggles and keybind
+    // -----------------------------------------------------------------------
+    "option.allow-regression.name":    "Allow Skill Regression",
+    "option.allow-regression.tooltip": "When enabled, skill levels can be lowered below their current value. WARNING: regression has significant in-game consequences — use with full knowledge of the risks.",
+
+    "option.strip-professions.name":    "Strip Invalid Professions on Regression",
+    "option.strip-professions.tooltip": "When a skill is regressed below level 5 or 10, automatically remove the professions unlocked at those tiers. Disable to keep the professions despite not meeting the level requirement.",
+
+    "option.open-menu-key.name":    "Open Skill Adjuster Key",
+    "option.open-menu-key.tooltip": "Press this key while in-game (no menu open) to open the Skill Adjuster menu.",
+
+    // -----------------------------------------------------------------------
+    // Skill row labels (used in the in-game menu)
+    // -----------------------------------------------------------------------
+    "skill.farming":  "Farming",
+    "skill.mining":   "Mining",
+    "skill.foraging": "Foraging",
+    "skill.fishing":  "Fishing",
+    "skill.combat":   "Combat",
+
+    // -----------------------------------------------------------------------
+    // HUD messages
+    // -----------------------------------------------------------------------
+    "hud.regression-blocked": "Cannot lower {{skill}} — enable 'Allow Skill Regression' in mod options first.",
+
+    // -----------------------------------------------------------------------
+    // Save-load sync popup
+    // -----------------------------------------------------------------------
+    "sync.question":     "Skill/XP mismatch detected: {{details}}. How would you like to resolve this?",
+    "sync.keep-levels":  "Keep skill levels, adjust XP to match",
+    "sync.keep-xp":      "Keep XP values, adjust skill levels to match",
+    "sync.ignore":       "Ignore (do nothing)",
+    "sync.fixed-xp":     "XP values adjusted to match skill levels.",
+    "sync.fixed-levels": "Skill levels adjusted to match XP values."
+}
