@@ -1,7 +1,8 @@
 // SkillAdjustMenu.cs
 //
-// Standalone skill-level menu. The IncreaseSkill method is a direct transcription
-// of CJBCheatsMenu.Framework.Cheats.Skills.SkillsCheat.IncreaseSkill.
+// Standalone skill-level menu. The IncreaseSkill method is based on
+// CJBCheatsMenu.Framework.Cheats.Skills.SkillsCheat.IncreaseSkill,
+// modified to keep the menu open for non-profession level increases.
 //
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,6 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Netcode;
 using StardewModdingAPI;
 using StardewValley;
 using StardewValley.Menus;
@@ -174,7 +174,7 @@ internal class SkillAdjustMenu : IClickableMenu
         drawMouse(b);
     }
 
-    // ---- Skill increment: direct copy of CJBCheatsMenu SkillsCheat logic ----
+    // ---- Skill increment: based on CJBCheatsMenu SkillsCheat logic ----
 
     /// <summary>
     /// Exact XP values from CJBCheatsMenu.Framework.Cheats.Skills.SkillsCheat.GetExperiencePoints.
@@ -188,7 +188,9 @@ internal class SkillAdjustMenu : IClickableMenu
     }
 
     /// <summary>
-    /// Direct transcription of CJBCheatsMenu.Framework.Cheats.Skills.SkillsCheat.IncreaseSkill.
+    /// Increase a skill by one level. For profession levels (5 and 10), closes the menu
+    /// and shows the vanilla LevelUpMenu for profession selection. For all other levels,
+    /// stays in the Skill Adjuster menu so the player can continue clicking.
     /// </summary>
     private void IncreaseSkill(int skillId)
     {
@@ -204,9 +206,20 @@ internal class SkillAdjustMenu : IClickableMenu
         if (newLevels.Count > wasNewLevels)
             newLevels.RemoveAt(newLevels.Count - 1);
 
-        Monitor.Log($"Increased skill {skillId} to {Game1.player.GetSkillLevel(skillId)}.", LogLevel.Info);
-        Game1.exitActiveMenu();
-        Game1.activeClickableMenu = (IClickableMenu)new LevelUpMenu(skillId, Game1.player.GetSkillLevel(skillId));
+        int newLevel = Game1.player.GetSkillLevel(skillId);
+        Monitor.Log($"Increased skill {skillId} to {newLevel}.", LogLevel.Info);
+
+        // Profession levels (5 and 10) require the vanilla LevelUpMenu for profession selection
+        if (newLevel == 5 || newLevel == 10)
+        {
+            Game1.exitActiveMenu();
+            Game1.activeClickableMenu = new LevelUpMenu(skillId, newLevel);
+        }
+        else
+        {
+            // Non-profession level: stay in this menu, just play a sound
+            Game1.playSound("newArtifact");
+        }
     }
 
     // ---- Skill decrement ----
@@ -272,19 +285,18 @@ internal class SkillAdjustMenu : IClickableMenu
     {
         int baseId = skillId * 6;
         Farmer player = Game1.player;
-        var professions = (NetHashSet<int>)(object)player.professions;
         bool changed = false;
 
         if (newLevel < 10)
         {
             for (int p = baseId + 2; p <= baseId + 5; p++)
             {
-                if (professions.Contains(p))
+                if (player.professions.Contains(p))
                 {
                     int healthBonus = p switch { 27 => 25, _ => 0 };
                     player.health -= healthBonus;
                     player.maxHealth -= healthBonus;
-                    professions.Remove(p);
+                    player.professions.Remove(p);
                     changed = true;
                 }
             }
@@ -294,12 +306,12 @@ internal class SkillAdjustMenu : IClickableMenu
         {
             for (int p = baseId; p <= baseId + 1; p++)
             {
-                if (professions.Contains(p))
+                if (player.professions.Contains(p))
                 {
                     int healthBonus = p switch { 24 => 15, _ => 0 };
                     player.health -= healthBonus;
                     player.maxHealth -= healthBonus;
-                    professions.Remove(p);
+                    player.professions.Remove(p);
                     changed = true;
                 }
             }

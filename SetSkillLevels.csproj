@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove=".gitignore" />
+    <None Remove="SetSkillLevels 1.0.0.zip" />
+    <None Remove="SetSkillLevels.code-workspace" />
+    <None Remove="SkillAdjustMenu.old" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- SMAPI mod build toolkit: auto-locates Stardew Valley and SMAPI DLLs -->
     <PackageReference Include="Pathoschild.Stardew.ModBuildConfig" Version="4.4.0" />
   </ItemGroup>

@@ -2,8 +2,8 @@
 {
   "Name": "Set Skill Levels",
   "Author": "tbonehunter",
-  "Version": "1.0.0",
-  "Description": "Allows adjusting player skill levels up or down via the in-game menu. Skill regression is an opt-in feature with known consequences.",
+  "Version": "1.1.0",
+  "Description": "Allows adjusting player skill levels up or down via the in-game menu. Skill regression is an opt-in feature with possible unintended consequences.",
   "UniqueID": "tbonehunter.SetSkillLevels",
   "EntryDll": "SetSkillLevels.dll",
   "MinimumApiVersion": "4.0.0",
